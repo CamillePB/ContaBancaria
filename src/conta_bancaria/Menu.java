@@ -13,7 +13,7 @@ public class Menu {
 		// TODO Auto-generated method stub
 		Scanner leia = new Scanner(System.in);
 		Cores cor = new Cores();
-		Conta c1 = new Conta(1, 123, 1, "amille Pedro Bueno", 100000.00f);
+		Conta c1 = new Conta(1, 123, 1, "Camille Pedro Bueno", 100000.00f);
 		
 		int opcao, numero, agencia, tipo, aniversario, numeroDestino;
 		String titular;
@@ -24,7 +24,6 @@ public class Menu {
 		System.out.println("\nSaldo da conta: " + c1.getSaldo() + "\n");
 
 		c1.setTitular("\nCamille Pedro Bueno");
-
 		c1.visualizar();
 
 		c1.sacar(200000.0f);
@@ -101,7 +100,7 @@ public class Menu {
 				break;
 			case 2:
 				System.out.println("Listar todas as Contas\n\n");
-
+				c1.visualizar();
 				break;
 			case 3:
 				System.out.println("Consultar dados da Conta - por número\n\n");
