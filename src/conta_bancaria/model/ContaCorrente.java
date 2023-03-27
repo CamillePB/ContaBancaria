@@ -32,6 +32,6 @@ public boolean sacar(float valor) {
 
 public void visualizar() {
 	super.visualizar();
-	System.out.println(this.limite);
+	System.out.println("Limite de Crédito: " + this.limite);
 }
 }
