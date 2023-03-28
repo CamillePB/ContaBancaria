@@ -2,7 +2,7 @@ package conta_bancaria;
 
 import java.util.Scanner;
 
-import conta_bancaria.model.Conta;
+
 import conta_bancaria.model.ContaCorrente;
 import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
@@ -18,36 +18,20 @@ public class Menu {
 		String titular;
 		float saldo, limite, valor;
 
-		Cores cor = new Cores();
-
-		// Teste da Classe Conta
-		Conta c1 = new Conta(1, 123, 1, "Camille Pedro Bueno", 100000.00f);
-		c1.visualizar();
-		c1.sacar(12000.0f);
-		c1.visualizar();
-		c1.depositar(5000.0f);
-		c1.visualizar();
 
 		// Teste da Classe Conta Corrente
 		ContaCorrente cc1 = new ContaCorrente(1, 123, 1, "José da Silva", 0.0f, 1000.0f);
 		cc1.visualizar();
-		cc1.sacar(12000.0f);
-		cc1.visualizar();
-		cc1.depositar(5000.0f);
-		cc1.visualizar();
-
+		
 		// Teste da Classe Conta Poupança
 		ContaPoupanca cp1 = new ContaPoupanca(2, 123, 2, "Maria dos Santos", 100000.0f, 15);
 		cp1.visualizar();
-		cp1.sacar(1000.0f);
-		cp1.visualizar();
-		cp1.depositar(5000.0f);
-		cp1.visualizar();
 		
-		System.out.println("\nSaldo da conta: " + c1.getSaldo() + "\n");
+		
+		/*System.out.println("\nSaldo da conta: " + c1.getSaldo() + "\n");
 
 		c1.setTitular("\nCamille Pedro Bueno");
-		c1.visualizar();
+		c1.visualizar();*/
 
 		while (true) {
 
@@ -117,7 +101,7 @@ public class Menu {
 				break;
 			case 2:
 				System.out.println("Listar todas as Contas\n\n");
-				c1.visualizar();
+				//c1.visualizar();
 				break;
 			case 3:
 				System.out.println("Consultar dados da Conta - por número\n\n");

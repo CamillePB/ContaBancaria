@@ -1,6 +1,6 @@
 package conta_bancaria.model;
 
-public class Conta {
+public abstract class Conta {
 //força as outrs classes utilizares os metodos
 	private int numero;
 	private int agencia;
