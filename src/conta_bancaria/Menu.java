@@ -1,8 +1,10 @@
 package conta_bancaria;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
+import conta_bancaria.controller.ContaController;
 import conta_bancaria.model.ContaCorrente;
 import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
@@ -18,25 +20,11 @@ public class Menu {
 		String titular;
 		float saldo, limite, valor;
 
-
-		// Teste da Classe Conta Corrente
-		ContaCorrente cc1 = new ContaCorrente(1, 123, 1, "José da Silva", 0.0f, 1000.0f);
-		cc1.visualizar();
-		
-		// Teste da Classe Conta Poupança
-		ContaPoupanca cp1 = new ContaPoupanca(2, 123, 2, "Maria dos Santos", 100000.0f, 15);
-		cp1.visualizar();
-		
-		
-		/*System.out.println("\nSaldo da conta: " + c1.getSaldo() + "\n");
-
-		c1.setTitular("\nCamille Pedro Bueno");
-		c1.visualizar();*/
+		ContaController contas = new ContaController();
 
 		while (true) {
 
-			System.out.println(Cores.TEXT_GREEN + Cores.ANSI_BLACK_BACKGROUND
-					+ "*****************************************************");
+			System.out.println(Cores.TEXT_GREEN_BOLD + "*****************************************************");
 			System.out.println("                                                     ");
 			System.out.println("                BANCO DO BRAZIL COM Z                ");
 			System.out.println("                                                     ");
@@ -56,10 +44,16 @@ public class Menu {
 			System.out.println("Entre com a opção desejada:                          ");
 			System.out.println("                                                     " + Cores.TEXT_RESET);
 
-			opcao = leia.nextInt();
+			try {// projeto
+				opcao = leia.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println(Cores.TEXT_RED_BOLD + "Dgite valores inteiros");
+				leia.nextLine();
+				opcao = 0;
+			}
 
 			if (opcao == 9) {
-				System.out.println(Cores.TEXT_PURPLE_BOLD_BRIGHT + "Banco do Brazil com Z - O seu Futuro começa aqui!");
+				System.out.println(Cores.TEXT_CYAN_BOLD + "Banco do Brazil com Z - O seu Futuro começa aqui!");
 				sobre();
 				leia.close();
 				System.exit(0);
@@ -83,32 +77,37 @@ public class Menu {
 				System.out.println("Digite o Saldo da Conta (R$): ");
 				saldo = leia.nextFloat();
 
-				switch (tipo) {
+				switch (tipo) {// projeto
 				case 1 -> {
 					System.out.println("Digite o Limite de Crédito (R$): ");
 					limite = leia.nextFloat();
 
-					// criar o objeto conta corrente
+					contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
+					// objeto que gera numero e atributos da conta
 				}
 				case 2 -> {
 					System.out.println("Digite o dia do Aniversario da Conta: ");
 					aniversario = leia.nextInt();
 
-					// criar o objeto conta poupanca
+					contas.cadastrar(
+							new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
+					// objeto que gera numero e atributos da conta
 				}
 				}
-
+				keyPress();
 				break;
 			case 2:
 				System.out.println("Listar todas as Contas\n\n");
-				//c1.visualizar();
+				contas.listarTodas();
+				keyPress();
 				break;
 			case 3:
 				System.out.println("Consultar dados da Conta - por número\n\n");
 
 				System.out.println("Digite o número da conta: ");
 				numero = leia.nextInt();
-
+				contas.procurarPorNumero(numero);
+				keyPress();
 				break;
 			case 4:
 				System.out.println("Atualizar dados da Conta\n\n");
@@ -145,12 +144,13 @@ public class Menu {
 
 				}
 				default -> {
-					System.out.println("Tipo de conta inválido!");
+					System.out.println(Cores.TEXT_RED_BOLD + "Tipo de conta inválido!");
 				}
 				}
 
 				// fim do condicional buscar na collection
 
+				keyPress();
 				break;
 			case 5:
 				System.out.println("Apagar a Conta\n\n");
@@ -158,6 +158,7 @@ public class Menu {
 				System.out.println("Digite o número da conta: ");
 				numero = leia.nextInt();
 
+				keyPress();
 				break;
 			case 6:
 				System.out.println("Saque\n\n");
@@ -168,6 +169,7 @@ public class Menu {
 				System.out.println("Digite o valor do Saque: ");
 				valor = leia.nextFloat();
 
+				keyPress();
 				break;
 			case 7:
 				System.out.println("Depósito\n\n");
@@ -178,6 +180,7 @@ public class Menu {
 				System.out.println("Digite o valor do Depósito: ");
 				valor = leia.nextFloat();
 
+				keyPress();
 				break;
 			case 8:
 				System.out.println("Transferência entre Contas\n\n");
@@ -192,9 +195,12 @@ public class Menu {
 					valor = leia.nextFloat();
 				} while (valor <= 0);
 
+				keyPress();
 				break;
 			default:
-				System.out.println("\nOpção Inválida!\n");
+				System.out.println(Cores.TEXT_RED_BOLD + "\nOpção Inválida!\n");
+
+				keyPress();
 				break;
 			}
 		}
@@ -204,5 +210,14 @@ public class Menu {
 		System.out.println("Camille Bueno");
 		System.out.println("https://github.com/CamillePB");
 
+	}
+
+	public static void keyPress() {// parar o menu até apertar enter
+		try {
+			System.out.println(Cores.TEXT_RESET + "Pressione a tecla enter para continuar");
+			System.in.read();// tecla enter
+		} catch (IOException e) {
+			System.out.println("Erro de digitação");
+		}
 	}
 }
